@@ -1,0 +1,905 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package com.mycompany.iu_dss.presentacion;
+
+import com.mycompany.iu_dss.controller.FuncionarioController;
+import com.mycompany.iu_dss.domain.Funcionario;
+import java.sql.SQLException;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+/**
+ *
+ * @author Usuario
+ */
+public class Main extends javax.swing.JFrame {
+
+    
+    private final FuncionarioController funcionarioController;
+    private final static String[] COLUMNS = {"ID", "TIPO DICUMENTO", "NUMERO DOCUMENTO", "NOMBRE", "APELLIDO", "ESTADO CIVIL", "SEXO",
+    "DIRECCION", "TELEFONO", "FECHA NACIMIENTO"};
+    private final static String SELECCIONE = "--SELECCIONE--";
+            
+    /**
+     * Creates new form Main
+     */
+    public Main() {
+        initComponents();
+        txtFuncionarioId.setEditable(false);
+        funcionarioController = new FuncionarioController();
+        listFuncionarios();
+        addListener();
+        
+    }
+    
+    private void listFuncionarios(){
+        cbxFuncionarios.removeAllItems();
+        Funcionario funcionario1 = new Funcionario();
+         funcionario1.setNumeroIdentificacion(SELECCIONE);
+         cbxFuncionarios.addItem(funcionario1);
+        DefaultTableModel defaultTableModel = new DefaultTableModel();
+        for (String COLUMN : COLUMNS ) {
+            defaultTableModel.addColumn(COLUMN);
+        }
+        
+        tblFuncionarios.setModel(defaultTableModel);
+        
+        try {
+            List<Funcionario> funcionarios =  funcionarioController.getFuncionarios();
+            if (funcionarios.isEmpty()) {
+                return;
+            }
+            defaultTableModel.setRowCount(funcionarios.size());
+            int row = 0;
+            for (Funcionario funcionario : funcionarios){
+                defaultTableModel.setValueAt(funcionario.getFuncionarioId(), row, 0);
+                defaultTableModel.setValueAt(funcionario.getTipoIdentificacion(), row, 1);
+                defaultTableModel.setValueAt(funcionario.getNumeroIdentificacion(), row, 2);
+                defaultTableModel.setValueAt(funcionario.getNombre(), row, 3);
+                defaultTableModel.setValueAt(funcionario.getApellido(), row, 4);
+                defaultTableModel.setValueAt(funcionario.getEstadoCivil(), row, 5);
+                defaultTableModel.setValueAt(funcionario.getSexo(), row, 6);
+                defaultTableModel.setValueAt(funcionario.getTelefono(), row, 7);
+                defaultTableModel.setValueAt(funcionario.getDireccion(), row, 8);
+                defaultTableModel.setValueAt(funcionario.getFechaNacimiento(), row, 9);
+                row++;
+                
+                cbxFuncionarios.addItem(funcionario);
+            }
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    private void addListener(){
+        cbxFuncionarios.addItemListener(event -> {
+            Funcionario selectedFuncionario = (Funcionario) event.getItem();
+            if (selectedFuncionario.getNumeroIdentificacion().equals(SELECCIONE)){
+                txtFuncionarioId.setText("");
+                txtTipoIdentificacionEdit.setText("");
+                txtNumeroIdentificacionEdit.setText("");
+                txtNombreEdit.setText("");
+                txtApellidoEdit.setText("");
+                txtEstadoCivilEdit.setText("");
+                txtSexoEdit.setText("");
+                txtDireccionEdit.setText("");
+                txtTelefonoEdit.setText("");
+                txtFechaNacimientoEdit.setText("");   
+            }else {
+               txtFuncionarioId.setText(String.valueOf(selectedFuncionario.getFuncionarioId()));
+               txtTipoIdentificacionEdit.setText(String.valueOf(selectedFuncionario.getTipoIdentificacion()));
+               txtNumeroIdentificacionEdit.setText(String.valueOf(selectedFuncionario.getNumeroIdentificacion()));
+               txtNombreEdit.setText(String.valueOf(selectedFuncionario.getNombre()));
+               txtApellidoEdit.setText(String.valueOf(selectedFuncionario.getApellido()));
+               txtEstadoCivilEdit.setText(String.valueOf(selectedFuncionario.getEstadoCivil()));
+               txtSexoEdit.setText(String.valueOf(selectedFuncionario.getSexo()));
+               txtDireccionEdit.setText(String.valueOf(selectedFuncionario.getDireccion()));
+               txtTelefonoEdit.setText(String.valueOf(selectedFuncionario.getTelefono()));
+               txtFechaNacimientoEdit.setText(String.valueOf(selectedFuncionario.getFechaNacimiento()));               
+            }
+        });
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jLabel1 = new javax.swing.JLabel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPFuncionario = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        lblTipoIdentificacion = new javax.swing.JLabel();
+        lblNumeroIdentificacion = new javax.swing.JLabel();
+        lblNombre = new javax.swing.JLabel();
+        lblApellido = new javax.swing.JLabel();
+        lblEstadoCivil = new javax.swing.JLabel();
+        lblSexo = new javax.swing.JLabel();
+        lblDireccion = new javax.swing.JLabel();
+        lblTelefono = new javax.swing.JLabel();
+        lblFechaNacimiento = new javax.swing.JLabel();
+        txtNumeroIdentificacion = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
+        txtApellido = new javax.swing.JTextField();
+        txtDireccion = new javax.swing.JTextField();
+        txtTelefono = new javax.swing.JTextField();
+        txtFechaNacimiento = new javax.swing.JTextField();
+        btnSave = new javax.swing.JButton();
+        txtTipoIdentificacion = new javax.swing.JComboBox<>();
+        txtEstadoCivil = new javax.swing.JComboBox<>();
+        txtSexo = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblFuncionarios = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        cbxFuncionarios = new javax.swing.JComboBox<>();
+        lblTipoIdentificacionEdit = new javax.swing.JLabel();
+        txtTipoIdentificacionEdit = new javax.swing.JTextField();
+        lblNumeroIdentificacionEdit = new javax.swing.JLabel();
+        lblNombreEdit = new javax.swing.JLabel();
+        lblApellidoEdit = new javax.swing.JLabel();
+        lblEstadoCivilEdit = new javax.swing.JLabel();
+        lblSexoEdit = new javax.swing.JLabel();
+        lblDireccionEdit = new javax.swing.JLabel();
+        lblTelefonoEdit = new javax.swing.JLabel();
+        lblFechaNacientoEdit = new javax.swing.JLabel();
+        txtNumeroIdentificacionEdit = new javax.swing.JTextField();
+        txtNombreEdit = new javax.swing.JTextField();
+        txtApellidoEdit = new javax.swing.JTextField();
+        txtEstadoCivilEdit = new javax.swing.JTextField();
+        txtFechaNacimientoEdit = new javax.swing.JTextField();
+        txtTelefonoEdit = new javax.swing.JTextField();
+        txtDireccionEdit = new javax.swing.JTextField();
+        txtSexoEdit = new javax.swing.JTextField();
+        btnUpdate = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        lblFuncionarioId = new javax.swing.JLabel();
+        txtFuncionarioId = new javax.swing.JTextField();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setText("GESTION DE FUNCIONARIOS");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 20, -1, -1));
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Complete los campos vacios "));
+
+        lblTipoIdentificacion.setText("Tipo Identificacion");
+
+        lblNumeroIdentificacion.setText("Numero Identificacion");
+
+        lblNombre.setText("Nombre");
+
+        lblApellido.setText("Apellido");
+
+        lblEstadoCivil.setText("Estado Civil");
+
+        lblSexo.setText("Sexo");
+
+        lblDireccion.setText("Direccion");
+
+        lblTelefono.setText("Telefono");
+
+        lblFechaNacimiento.setText("Fecha de nacimiento");
+
+        txtApellido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtApellidoActionPerformed(evt);
+            }
+        });
+
+        txtTelefono.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTelefonoActionPerformed(evt);
+            }
+        });
+
+        btnSave.setText("GUARDAR");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
+
+        txtTipoIdentificacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cedula", "Tarjeta ", "Extranjera", "Digital", "Registro", "Pasaporte" }));
+
+        txtEstadoCivil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Soltero", "Casado", "Union libre", "Viudo", "Divorciado", " " }));
+        txtEstadoCivil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEstadoCivilActionPerformed(evt);
+            }
+        });
+
+        txtSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Femenino", "Sin especificar" }));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(txtTipoIdentificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addComponent(txtSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
+                                .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblApellido)
+                                .addGap(128, 128, 128)
+                                .addComponent(lblEstadoCivil)
+                                .addGap(38, 38, 38))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                        .addComponent(lblTelefono)
+                                        .addGap(152, 152, 152))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                        .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(107, 107, 107))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(53, 53, 53)
+                                        .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(27, 27, 27)))
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                        .addComponent(lblFechaNacimiento)
+                                        .addGap(39, 39, 39))
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(txtFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(17, 17, 17))
+                                    .addComponent(txtEstadoCivil, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(372, 372, 372)
+                                .addComponent(btnSave))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(54, 54, 54)
+                                .addComponent(lblSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(157, 157, 157)
+                                .addComponent(lblDireccion))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(28, 28, 28)
+                                .addComponent(lblTipoIdentificacion)
+                                .addGap(86, 86, 86)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtNumeroIdentificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addGap(12, 12, 12)
+                                        .addComponent(lblNumeroIdentificacion)
+                                        .addGap(100, 100, 100)
+                                        .addComponent(lblNombre)))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTipoIdentificacion)
+                    .addComponent(lblNumeroIdentificacion)
+                    .addComponent(lblNombre)
+                    .addComponent(lblApellido)
+                    .addComponent(lblEstadoCivil))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNumeroIdentificacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTipoIdentificacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtEstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblFechaNacimiento)
+                    .addComponent(lblTelefono)
+                    .addComponent(lblDireccion)
+                    .addComponent(lblSexo))
+                .addGap(34, 34, 34)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(38, 38, 38)
+                .addComponent(btnSave)
+                .addContainerGap())
+        );
+
+        tblFuncionarios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(tblFuncionarios);
+
+        javax.swing.GroupLayout jPFuncionarioLayout = new javax.swing.GroupLayout(jPFuncionario);
+        jPFuncionario.setLayout(jPFuncionarioLayout);
+        jPFuncionarioLayout.setHorizontalGroup(
+            jPFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+        );
+        jPFuncionarioLayout.setVerticalGroup(
+            jPFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPFuncionarioLayout.createSequentialGroup()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Crear Funcionario", jPFuncionario);
+
+        jLabel2.setText("Funcionarios");
+
+        cbxFuncionarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxFuncionariosActionPerformed(evt);
+            }
+        });
+
+        lblTipoIdentificacionEdit.setText("Tipo Identificacion");
+
+        lblNumeroIdentificacionEdit.setText("Numero Identificacion");
+
+        lblNombreEdit.setText("Nombre");
+
+        lblApellidoEdit.setText("Apellido");
+
+        lblEstadoCivilEdit.setText("Estado Civil");
+
+        lblSexoEdit.setText("Sexo");
+
+        lblDireccionEdit.setText("Direccion");
+
+        lblTelefonoEdit.setText("Telefono");
+
+        lblFechaNacientoEdit.setText("Fecha Nacimiento");
+
+        txtNombreEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreEditActionPerformed(evt);
+            }
+        });
+
+        txtEstadoCivilEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEstadoCivilEditActionPerformed(evt);
+            }
+        });
+
+        btnUpdate.setText("ACTUALIZAR");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
+
+        btnDelete.setText("ELIMINAR");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+
+        lblFuncionarioId.setText("ID");
+
+        txtFuncionarioId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFuncionarioIdActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(39, 39, 39)
+                                .addComponent(lblTipoIdentificacionEdit))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(17, 17, 17)
+                                .addComponent(txtTipoIdentificacionEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(40, 40, 40)
+                                .addComponent(txtSexoEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(49, 49, 49)
+                                        .addComponent(txtNumeroIdentificacionEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(60, 60, 60)
+                                        .addComponent(txtNombreEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(37, 37, 37)
+                                        .addComponent(txtDireccionEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 54, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(70, 70, 70)
+                                .addComponent(lblNumeroIdentificacionEdit)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblNombreEdit)
+                                .addGap(75, 75, 75))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(28, 28, 28)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(46, 46, 46)
+                                        .addComponent(lblSexoEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(138, 138, 138)
+                                        .addComponent(lblDireccionEdit))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(cbxFuncionarios, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(txtFuncionarioId, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(61, 61, 61)
+                                .addComponent(jLabel2)
+                                .addGap(138, 138, 138)
+                                .addComponent(lblFuncionarioId, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblApellidoEdit)
+                        .addGap(113, 113, 113)
+                        .addComponent(lblEstadoCivilEdit)
+                        .addGap(31, 31, 31))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtApellidoEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38)
+                        .addComponent(txtEstadoCivilEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblTelefonoEdit)
+                        .addGap(128, 128, 128)
+                        .addComponent(lblFechaNacientoEdit)
+                        .addGap(94, 94, 94))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtTelefonoEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(45, 45, 45)
+                        .addComponent(txtFechaNacimientoEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(268, 268, 268)
+                .addComponent(btnUpdate)
+                .addGap(96, 96, 96)
+                .addComponent(btnDelete)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(lblFuncionarioId))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbxFuncionarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtFuncionarioId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(49, 49, 49)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTipoIdentificacionEdit)
+                    .addComponent(lblNumeroIdentificacionEdit)
+                    .addComponent(lblNombreEdit)
+                    .addComponent(lblApellidoEdit)
+                    .addComponent(lblEstadoCivilEdit))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtTipoIdentificacionEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNumeroIdentificacionEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNombreEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtApellidoEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtEstadoCivilEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(39, 39, 39)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSexoEdit)
+                    .addComponent(lblDireccionEdit)
+                    .addComponent(lblTelefonoEdit)
+                    .addComponent(lblFechaNacientoEdit))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtFechaNacimientoEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTelefonoEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDireccionEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSexoEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(66, 66, 66)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnUpdate)
+                    .addComponent(btnDelete))
+                .addContainerGap(137, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Editar Funcionario", jPanel2);
+
+        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 910, 520));
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void txtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTelefonoActionPerformed
+
+    private void txtApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtApellidoActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        
+        if (txtTipoIdentificacion.getItemAt(WIDTH).trim().length() == 0) {
+            JOptionPane.showMessageDialog(null, "Digite el tipo de identificacion");
+            txtTipoIdentificacion.requestFocus();
+            return;
+        }
+        
+        if (txtNumeroIdentificacion.getText().trim().length() == 0) {
+            JOptionPane.showMessageDialog(null, "Digite el numero de identificacion");
+            txtNumeroIdentificacion.requestFocus();
+            return;
+        }
+        
+        if (txtNombre.getText().trim().length() == 0) {
+            JOptionPane.showMessageDialog(null, "Digite el nombre");
+            txtNombre.requestFocus();
+            return;
+        }
+        
+        if (txtApellido.getText().trim().length() == 0) {
+            JOptionPane.showMessageDialog(null, "Digite el apellido");
+            txtApellido.requestFocus();
+            return;
+        }
+        
+        if (txtEstadoCivil.getItemAt(WIDTH).trim().length() == 0) {
+            JOptionPane.showMessageDialog(null, "Digite el estado civil");
+            txtEstadoCivil.requestFocus();
+            return;
+        }
+        
+        if (txtSexo.getItemAt(WIDTH).trim().length() == 0) {
+            JOptionPane.showMessageDialog(null, "Digite el sexo");
+            txtSexo.requestFocus();
+            return;
+        }
+        
+        if (txtDireccion.getText().trim().length() == 0) {
+            JOptionPane.showMessageDialog(null, "Digite la direccion");
+            txtDireccion.requestFocus();
+            return;
+        }
+        
+        if (txtTelefono.getText().trim().length() == 0) {
+            JOptionPane.showMessageDialog(null, "Digite el telefono");
+            txtTelefono.requestFocus();
+            return;
+        }
+        
+        if (txtFechaNacimiento.getText().trim().length() == 0) {
+            JOptionPane.showMessageDialog(null, "Digite la fecha de nacimiento");
+            txtFechaNacimiento.requestFocus();
+            return;
+        }
+        
+        Funcionario funcionario = new Funcionario();
+        funcionario.setTipoIdentificacion(txtTipoIdentificacion.getSelectedItem().toString());
+        funcionario.setNumeroIdentificacion(txtNumeroIdentificacion.getText().trim());
+        funcionario.setNombre(txtNombre.getText().trim());
+        funcionario.setApellido(txtApellido.getText().trim());
+        funcionario.setEstadoCivil(txtEstadoCivil.getSelectedItem().toString());
+        funcionario.setSexo(txtSexo.getSelectedItem().toString());
+        funcionario.setDireccion(txtDireccion.getText().trim());
+        funcionario.setTelefono(txtTelefono.getText().trim());
+        funcionario.setFechaNacimiento(txtFechaNacimiento.getText().trim());
+        
+        try {
+            funcionarioController.createOneFuncionario(funcionario);
+            txtTipoIdentificacion.setSelectedItem("");
+            txtNumeroIdentificacion.setText("");
+            txtNombre.setText("");
+            txtApellido.setText("");
+            txtEstadoCivil.setSelectedItem("");
+            txtSexo.setSelectedItem("");
+            txtDireccion.setText("");
+            txtTelefono.setText("");
+            txtFechaNacimiento.setText("");
+            listFuncionarios();
+            JOptionPane.showMessageDialog(null, "Funcionario creado con exito");
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "No fue posible crear el funcionario");
+        }
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void cbxFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxFuncionariosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxFuncionariosActionPerformed
+
+    private void txtNombreEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreEditActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreEditActionPerformed
+
+    private void txtEstadoCivilEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEstadoCivilEditActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEstadoCivilEditActionPerformed
+
+    private void txtFuncionarioIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFuncionarioIdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFuncionarioIdActionPerformed
+
+    private void txtEstadoCivilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEstadoCivilActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEstadoCivilActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+
+        if (txtFuncionarioId.getText().trim().length() == 0) {
+            JOptionPane.showMessageDialog(null, "Seleccione un funcionario");
+            txtFuncionarioId.requestFocus();
+            return;
+        }
+        
+        if (txtTipoIdentificacionEdit.getText().trim().length() == 0) {
+            JOptionPane.showMessageDialog(null, "Digite el tipo de identificacion");
+            txtTipoIdentificacionEdit.requestFocus();
+            return;
+        }
+        
+        if (txtNumeroIdentificacionEdit.getText().trim().length() == 0) {
+            JOptionPane.showMessageDialog(null, "Digite el numero de identificacion");
+            txtNumeroIdentificacionEdit.requestFocus();
+            return;
+        }
+        
+        if (txtNombreEdit.getText().trim().length() == 0) {
+            JOptionPane.showMessageDialog(null, "Digite el nombre");
+            txtNombreEdit.requestFocus();
+            return;
+        }
+        
+        if (txtApellidoEdit.getText().trim().length() == 0) {
+            JOptionPane.showMessageDialog(null, "Digite el apellido");
+            txtApellidoEdit.requestFocus();
+            return;
+        }
+        
+        if (txtEstadoCivilEdit.getText().trim().length() == 0) {
+            JOptionPane.showMessageDialog(null, "Digite el estado civil");
+            txtEstadoCivilEdit.requestFocus();
+            return;
+        }
+        
+        if (txtSexoEdit.getText().trim().length() == 0) {
+            JOptionPane.showMessageDialog(null, "Digite el sexo");
+            txtSexoEdit.requestFocus();
+            return;
+        }
+        
+        if (txtDireccionEdit.getText().trim().length() == 0) {
+            JOptionPane.showMessageDialog(null, "Digite la direccion");
+            txtDireccionEdit.requestFocus();
+            return;
+        }
+        
+        if (txtTelefonoEdit.getText().trim().length() == 0) {
+            JOptionPane.showMessageDialog(null, "Digite el telefono");
+            txtTelefonoEdit.requestFocus();
+            return;
+        }
+        
+        if (txtFechaNacimientoEdit.getText().trim().length() == 0) {
+            JOptionPane.showMessageDialog(null, "Digite la fecha de nacimiento");
+            txtFechaNacimientoEdit.requestFocus();
+            return;
+        }
+        
+        Funcionario funcionario = new Funcionario();
+        funcionario.setTipoIdentificacion(txtTipoIdentificacionEdit.getText().trim());
+        funcionario.setNumeroIdentificacion(txtNumeroIdentificacionEdit.getText().trim());
+        funcionario.setNombre(txtNombreEdit.getText().trim());
+        funcionario.setApellido(txtApellidoEdit.getText().trim());
+        funcionario.setEstadoCivil(txtEstadoCivilEdit.getText().trim());
+        funcionario.setSexo(txtSexoEdit.getText().trim());
+        funcionario.setDireccion(txtDireccionEdit.getText().trim());
+        funcionario.setTelefono(txtTelefonoEdit.getText().trim());
+        funcionario.setFechaNacimiento(txtFechaNacimientoEdit.getText().trim());
+        
+        int opt = JOptionPane.showConfirmDialog(null, "¿Desea actualizar el funcionario?",
+                "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        
+        if (opt == 0) {
+           
+            try {
+                funcionarioController.update(funcionario, Integer.parseInt(txtFuncionarioId.getText()));
+                txtTipoIdentificacion.setSelectedItem("");
+                txtNumeroIdentificacion.setText("");
+                txtNombre.setText("");
+                txtApellido.setText("");
+                txtEstadoCivil.setSelectedItem("");
+                txtSexo.setSelectedItem("");
+                txtDireccion.setText("");
+                txtTelefono.setText("");
+                txtFechaNacimiento.setText("");
+                listFuncionarios();
+                JOptionPane.showMessageDialog(null, "Funcionario actualizado con exito");
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "No fue posible actualizar el funcionario");
+            }
+        }
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+
+        if (txtFuncionarioId.getText().trim().length() == 0) {
+            JOptionPane.showMessageDialog(null, "Seleccione un funcionario");
+            txtFuncionarioId.requestFocus();
+            return;
+        }
+        
+         int opt = JOptionPane.showConfirmDialog(null, "¿Desea borrar el funcionario?",
+                "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+         
+         if (opt == 0) {
+           
+            try {
+                funcionarioController.delete(Integer.parseInt(txtFuncionarioId.getText()));
+                txtTipoIdentificacion.setSelectedItem("");
+                txtNumeroIdentificacion.setText("");
+                txtNombre.setText("");
+                txtApellido.setText("");
+                txtEstadoCivil.setSelectedItem("");
+                txtSexo.setSelectedItem("");
+                txtDireccion.setText("");
+                txtTelefono.setText("");
+                txtFechaNacimiento.setText("");
+                listFuncionarios();
+                JOptionPane.showMessageDialog(null, "Funcionario eliminado con exito");
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "No fue posible eliminar el funcionario");
+            }
+        }
+
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Main().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnUpdate;
+    private javax.swing.JComboBox<Funcionario> cbxFuncionarios;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPFuncionario;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JLabel lblApellido;
+    private javax.swing.JLabel lblApellidoEdit;
+    private javax.swing.JLabel lblDireccion;
+    private javax.swing.JLabel lblDireccionEdit;
+    private javax.swing.JLabel lblEstadoCivil;
+    private javax.swing.JLabel lblEstadoCivilEdit;
+    private javax.swing.JLabel lblFechaNacientoEdit;
+    private javax.swing.JLabel lblFechaNacimiento;
+    private javax.swing.JLabel lblFuncionarioId;
+    private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblNombreEdit;
+    private javax.swing.JLabel lblNumeroIdentificacion;
+    private javax.swing.JLabel lblNumeroIdentificacionEdit;
+    private javax.swing.JLabel lblSexo;
+    private javax.swing.JLabel lblSexoEdit;
+    private javax.swing.JLabel lblTelefono;
+    private javax.swing.JLabel lblTelefonoEdit;
+    private javax.swing.JLabel lblTipoIdentificacion;
+    private javax.swing.JLabel lblTipoIdentificacionEdit;
+    private javax.swing.JTable tblFuncionarios;
+    private javax.swing.JTextField txtApellido;
+    private javax.swing.JTextField txtApellidoEdit;
+    private javax.swing.JTextField txtDireccion;
+    private javax.swing.JTextField txtDireccionEdit;
+    private javax.swing.JComboBox<String> txtEstadoCivil;
+    private javax.swing.JTextField txtEstadoCivilEdit;
+    private javax.swing.JTextField txtFechaNacimiento;
+    private javax.swing.JTextField txtFechaNacimientoEdit;
+    private javax.swing.JTextField txtFuncionarioId;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtNombreEdit;
+    private javax.swing.JTextField txtNumeroIdentificacion;
+    private javax.swing.JTextField txtNumeroIdentificacionEdit;
+    private javax.swing.JComboBox<String> txtSexo;
+    private javax.swing.JTextField txtSexoEdit;
+    private javax.swing.JTextField txtTelefono;
+    private javax.swing.JTextField txtTelefonoEdit;
+    private javax.swing.JComboBox<String> txtTipoIdentificacion;
+    private javax.swing.JTextField txtTipoIdentificacionEdit;
+    // End of variables declaration//GEN-END:variables
+}
